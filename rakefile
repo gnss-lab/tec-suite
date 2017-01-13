@@ -1,0 +1,164 @@
+# Source
+NAME = 'tec-suite'
+SRC = 'tecs.py'
+CFG = 'tecs.cfg'
+
+def windows?
+  (/mingw/ =~ RUBY_PLATFORM) != nil
+end
+
+def linux?
+  (/linux/ =~ RUBY_PLATFORM) != nil
+end
+
+def macos?
+  (/darwin/ =~ RUBY_PLATFORM) != nil
+end
+
+def version
+  `git describe`.chomp
+end
+
+def cheol(fname)
+  f_content = open(fname) { |f| f.readlines }
+  f_content = f_content.collect { |l| l.chomp }
+
+  open(fname, 'w') do |f|
+    f_content.each { |l| f.puts l }
+  end
+end
+
+windows? and (
+  # Python and PyInstaller
+  PYTHON = 'c:\Python27\python.exe'
+  PYINSTALLER = 'E:\tools\PyInstaller-3.1.1\pyinstaller.py'
+  PYIBUILDPATH = '_build'
+  PYISPECPATH = PYIBUILDPATH
+
+  DISTPATH = NAME + '-' + version + '-win32'
+  DISTFILE = DISTPATH + '.zip'
+
+  # additional files
+  DIST_EXTRA_FILES_PATH = DISTPATH + '/apps'
+  DIST_EXTRA_FILES = [
+    '_distfiles/apps/crx2rnx.exe',
+    '_distfiles/apps/gzip.exe',
+    '_distfiles/apps/crx2rnx.README',
+    '_distfiles/apps/gzip.README'
+  ]
+
+  ARCH_CMD = [
+    '7z',
+    'a',
+    DISTFILE,
+    DISTPATH
+  ].join(' ')
+)
+
+linux? and (
+  PYTHON = 'python2.7'
+  PYINSTALLER = '/media/sf_Projects/tools/PyInstaller-3.1.1/pyinstaller.py'
+  PYIBUILDPATH = '_build'
+  PYISPECPATH = PYIBUILDPATH
+
+  DISTPATH = NAME + '-' + version + '-linux32'
+  DISTFILE = DISTPATH + '.tgz'
+
+  DIST_EXTRA_FILES = nil
+
+  ARCH_CMD = [
+    'tar',
+    '-caf',
+    DISTFILE,
+    DISTPATH
+  ].join(' ')
+)
+
+macos? and (
+  PYTHON = 'python2.7'
+  PYINSTALLER = '/Users/ilya/Projects/tools/PyInstaller-3.1.1/pyinstaller.py'
+  PYIBUILDPATH = '_build'
+  PYISPECPATH = PYIBUILDPATH
+
+  DISTPATH = NAME + '-' + version + '-macos'
+  DISTFILE = DISTPATH + '.tgz'
+
+  DIST_EXTRA_FILES = nil
+
+  ARCH_CMD = [
+    'tar',
+    '-czf',
+    DISTFILE,
+    DISTPATH
+  ].join(' ')
+)
+
+desc 'make distributive'
+task :default => [:build, :cfg] do
+  # add extra files
+  if DIST_EXTRA_FILES
+    mkdir DIST_EXTRA_FILES_PATH
+
+    DIST_EXTRA_FILES.each do |f|
+      cp f, DIST_EXTRA_FILES_PATH
+
+      windows? and (
+        (f =~ /\.readme$/i) and (
+          readme = Pathname.new(f).basename
+          f_path = Pathname.new(DIST_EXTRA_FILES_PATH) + readme
+          cheol(f_path)
+        )
+      )
+    end
+  end
+
+  # make archive
+  system ARCH_CMD
+end
+
+desc 'build the binary'
+task :build => :clean do
+  cmd = [
+    PYTHON,
+    PYINSTALLER,
+    "--specpath=#{PYISPECPATH}",
+    "--workpath=#{PYIBUILDPATH}",
+    "--distpath=#{DISTPATH}",
+    "--clean",
+    "--name=tecs",
+    "--onefile",
+    SRC
+  ].join(' ')
+
+  system cmd
+end
+
+desc 'copy confguration file'
+task :cfg do
+  if windows?
+    require 'pathname'
+    cfg_path = Pathname.new(DISTPATH)
+    cfg = cfg_path + CFG
+
+    chenc_cmd = [
+      'iconv',
+      '-f utf-8',
+      '-t cp1251',
+      CFG,
+      '>',
+      cfg
+    ].join(' ')
+
+    system chenc_cmd
+    cheol(cfg)
+  else
+    cp CFG, DISTPATH
+  end
+end
+
+desc 'clean'
+task :clean do
+  rm_rf DISTPATH
+  rm_rf DISTFILE
+  rm_rf PYIBUILDPATH
+end
