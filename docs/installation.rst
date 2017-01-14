@@ -6,9 +6,10 @@ Just download and extract **tec-suite** archive wherever you want.
 
 Downloads:
 
-* `Windows <http://somewhere.com>`_
-* `Linux <http://somewhere.com>`_
-* `macOS <http://somewhere.com>`_
+* `Windows <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-win32.zip>`_
+* `Linux <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-linux32.tgz>`_
+* `macOS <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-macos.tgz>`_
+
 
 ************
 Requirements
@@ -27,6 +28,7 @@ Requirements
 
 .. note::
 
-   Put ``crx2rnx`` (and ``gunizp`` if you're running Windows) to a dir
-   where ``tecs`` could find it, e.g. to the dir which contains
-   ``tecs`` binary or to any dir in ``$PATH`` variable.
+   **tec-suite** for Windows comes with ``crx2rnx`` and ``gzip`` executables. In
+   case of Linux or macOS put ``crx2rnx`` to a dir where ``tecs`` could find it,
+   e.g. to the dir which contains ``tecs`` binary or to any dir in ``$PATH``
+   variable.

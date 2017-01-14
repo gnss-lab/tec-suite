@@ -33,9 +33,7 @@ For the moment **tec-suite** supports:
 Documentation
 =============
 
-You can find the documentation at readthedocs.io_ site.
-
-.. _readthedocs.io: http://tec-suite.readthedocs.io
+Coming soon.
 
 Installation
 ============
@@ -45,13 +43,9 @@ Just download and extract **tec-suite** archive wherever you want.
 Downloads
 ~~~~~~~~~
 
-* `Windows <http://somewhere.com>`_
-* `Linux <http://somewhere.com>`_
-* `macOS <http://somewhere.com>`_
-
-To install **tec-suite** manually:
-
-pip ...
+* `Windows <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-win32.zip>`_
+* `Linux <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-linux32.tgz>`_
+* `macOS <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-macos.tgz>`_
 
 Requirements
 ~~~~~~~~~~~~
@@ -72,10 +66,6 @@ Usage
 
 * Edit ``tecs.cfg``
 * Run ``tecs`` (or ``tecs.exe``)
-
-For further details see `the documentation`__.
-
-__ readthedocs.io_
 
 Bugs
 ====
