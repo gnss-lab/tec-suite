@@ -33,7 +33,9 @@ For the moment **tec-suite** supports:
 Documentation
 =============
 
-Coming soon.
+You can find the documentation at readthedocs.org_.
+
+.. _readthedocs.org: http://tec-suite.readthedocs.io
 
 Installation
 ============
@@ -67,10 +69,15 @@ Usage
 * Edit ``tecs.cfg``
 * Run ``tecs`` (or ``tecs.exe``)
 
+For further details see `the docs`__.
+
+__ readthedocs.org_
+
 Bugs
 ====
 
-Report any bugs via project's `issue tracker <http://github.com>`_.
+Report any bugs via project's
+`issue tracker <https://github.com/gnss-lab/tec-suite/issues>`_.
 Feel free to fork and play with the code. I will appreciate fixes
 and suggestions.
 
