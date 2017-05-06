@@ -11,12 +11,24 @@ def linux?
   (/linux/ =~ RUBY_PLATFORM) != nil
 end
 
+def x86_64?
+    (/x86_64/ =~ RUBY_PLATFORM) != nil
+end
+
 def macos?
   (/darwin/ =~ RUBY_PLATFORM) != nil
 end
 
 def version
   `git describe`.chomp
+end
+
+def platform
+    if x86_64?
+        return '64'
+    else
+        return '32'
+    end
 end
 
 def cheol(fname)
@@ -61,7 +73,7 @@ linux? and (
   PYIBUILDPATH = '_build'
   PYISPECPATH = PYIBUILDPATH
 
-  DISTPATH = NAME + '-' + version + '-linux32'
+  DISTPATH = NAME + '-' + version + '-linux' + platform
   DISTFILE = DISTPATH + '.tgz'
 
   DIST_EXTRA_FILES = nil
