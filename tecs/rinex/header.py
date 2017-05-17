@@ -32,9 +32,7 @@ from builtins import str
 from builtins import range
 from builtins import object
 
-import datetime
-
-from tecs.rinex.common import sec2sec_ms
+from tecs.rinex.common import sec2sec_ms, validate_epoch
 from tecs.rinex.label import SAT_SYS_BDS
 
 NAME = 'tecs.rinex.header'
@@ -122,7 +120,7 @@ class TimeOfFirstObs(HeaderLabel):
         sec, microsec = sec2sec_ms(sec)
 
         epoch += [sec, microsec]
-        epoch = datetime.datetime(*epoch)
+        epoch = validate_epoch(epoch)
 
         time_system = header_slice[48:51]
 
