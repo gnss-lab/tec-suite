@@ -173,27 +173,36 @@ class Obs2(ObservationData):
         epoch = None
         epoch_count = 0
         deltas = []
+        dt = None
 
         records = self.read_records()
 
-        while epoch_count < n:
-            try:
+        try:
+            while epoch_count < n:
                 rec = next(records)
-            except (StopIteration, RinexError) as err:
+
+                if not epoch:
+                    epoch = rec[0]
+                    continue
+
+                dt = rec[0] - epoch
+
+                if dt:
+                    deltas.append(dt.total_seconds())
+                    epoch_count += 1
+
+                epoch = rec[0]
+
+        except RinexError as err:
+            msg = ("Can't find out obs interval: %s" % str(err))
+            raise RinexError(self.filename, msg)
+
+        except StopIteration as err:
+            if dt is None:
                 msg = ("Can't find out obs interval: %s" % str(err))
                 raise RinexError(self.filename, msg)
-
-            if not epoch:
-                epoch = rec[0]
-                continue
-
-            dt = rec[0] - epoch
-
-            if dt:
-                deltas.append(dt.total_seconds())
-                epoch_count += 1
-
-            epoch = rec[0]
+            else:
+                pass
 
         records.close()
         del records
@@ -537,8 +546,6 @@ class Obs2(ObservationData):
 
             self.preceding_epoch = cur_epoch
 
-        self._fobj.close()
-
     def __init__(self, f_obj, filename):
         """ """
         super(Obs2, self).__init__(f_obj, filename)
@@ -572,7 +579,7 @@ class Obs2(ObservationData):
 
         self._parse_header(file_header)
 
-        dt = self.get_interval(2)
+        dt = self.get_interval(10)
 
         if self.interval.value != dt:
             msg_wi = 'Wrong interval value in the header of {}: {}; ' \
@@ -608,6 +615,9 @@ class Obs2(ObservationData):
 
         del lines_per_rec
         del obs_num
+
+    def __del__(self):
+        self._fobj.close()
 
 
 class Obs21(Obs2):
