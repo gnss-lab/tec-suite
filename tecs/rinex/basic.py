@@ -86,7 +86,6 @@ class RinexReadError(RinexError):
 
 class Rinex(object):
     def __init__(self, f_obj, filename):
-        # type: (file-like object, str) -> Rinex
         """RINEX"""
         self._fobj = f_obj
         self.filename = filename
@@ -124,7 +123,7 @@ class ObservationData(Rinex):
     def __init__(self, f_obj, filename):
         super(ObservationData, self).__init__(f_obj, filename)
         self.tofo = None
-        self.xyz = None
+        self.xyz = (0., 0., 0.)
         self.interval = None
 
     def _parse_header(self, header):
