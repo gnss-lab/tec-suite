@@ -210,7 +210,7 @@ class Obs2(ObservationData):
                 else:
                     dt_dict[dt] += 1
 
-            tmp = dt_dict.keys()
+            tmp = list(dt_dict.keys())
             tmp.sort(key=lambda k: dt_dict[k], reverse=True)
 
             interval = tmp[0]
