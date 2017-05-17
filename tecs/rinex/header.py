@@ -147,10 +147,10 @@ class ApproxPositionXYX(HeaderLabel):
     def __init__(self, version):
         super(ApproxPositionXYX, self).__init__(version)
         self.label = 'APPROX POSITION XYZ'
+        self._value = (0., 0., 0.)
 
     @property
     def value(self):
-        # type: () -> tuple
         return self._value
 
     @value.setter
