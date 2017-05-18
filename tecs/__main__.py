@@ -217,7 +217,7 @@ def main():
             print("- reading...", end='')
             stdout.flush()
             obs = obs_file(o_file)
-        except (RinexError, UncompressError) as err:
+        except (RinexError, UncompressError, UnicodeDecodeError) as err:
             msg = "%s" % err
             logger.error(msg)
             logger_error_count += 1
