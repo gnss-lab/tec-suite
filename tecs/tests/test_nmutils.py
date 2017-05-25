@@ -37,3 +37,10 @@ def test_compose_navigation_re():
 
     assert not re_nav.match(nav_file_v2)
     assert not re_nav.match(nav_file_v3)
+
+    nav_file_v3_df = 'ISTP00RUS_R_20160010000_01H_50Z_GN.rnx'
+    epoch = datetime.datetime(2016, 1, 1)
+    system = SAT_SYS_GPS
+
+    re_nav = compose_navigation_re(system, epoch)
+    assert re_nav.match(nav_file_v3_df)
