@@ -31,6 +31,7 @@ from builtins import map
 
 import re
 import datetime
+import logging
 
 from tecs.rinex import nav_file
 from tecs.rinex.futils import find_files
@@ -210,16 +211,22 @@ def select_navigation_message(epoch, system, number, message, first_msg=False):
     ephemeris : tuple
         ephemeris
     """
+    logger = logging.getLogger(NAME + '.select_navigation_message')
+
     if system not in message:
-        # TODO warn
+        msg = 'There is no such system {sys} in the navigation message.'
+        logger.warning(msg.format(sys=system))
         return None
 
     if not message[system]:
-        # TODO warn
+        msg = 'There is no such navigation message.'
+        logger.warning(msg)
         return None
 
     if number not in message[system]:
-        # TODO warn
+        msg = 'There is no such satellite {sys}{sat} in the navigation ' \
+              'message.'
+        logger.warning(msg.format(sys=system, sat=number))
         return None
 
     gps_way = (SAT_SYS_GPS, SAT_SYS_BDS, SAT_SYS_GAL)
