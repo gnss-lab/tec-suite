@@ -1,4 +1,4 @@
-tec-suite v0.7.4
+tec-suite v0.7.5
 ----------------
 
 Software to reconstruct slant total electron content (TEC) value in
@@ -45,12 +45,12 @@ Just download and extract **tec-suite** archive wherever you want.
 Downloads
 ~~~~~~~~~
 
-* `Windows <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-win32.zip>`_
+* `Windows <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.5/tec-suite-v0.7.5-win32.zip>`_
 * Linux: x86_32_ and x86_64_
-* `macOS <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-macos.tgz>`_
+* `macOS <https://github.com/gnss-lab/tec-suite/releases/download/v0.7.5/tec-suite-v0.7.5-macos.tgz>`_
 
-.. _x86_32: https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-linux32.tgz
-.. _x86_64: https://github.com/gnss-lab/tec-suite/releases/download/v0.7.4/tec-suite-v0.7.4-linux64.tgz
+.. _x86_32: https://github.com/gnss-lab/tec-suite/releases/download/v0.7.5/tec-suite-v0.7.5-linux32.tgz
+.. _x86_64: https://github.com/gnss-lab/tec-suite/releases/download/v0.7.5/tec-suite-v0.7.5-linux64.tgz
 
 Requirements
 ~~~~~~~~~~~~
