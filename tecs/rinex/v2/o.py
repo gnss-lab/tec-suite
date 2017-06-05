@@ -185,6 +185,9 @@ class Obs2(ObservationData):
                     epoch = rec[0]
                     continue
 
+                elif epoch == rec[0]:
+                    continue
+
                 dt = rec[0] - epoch
 
                 if dt:
