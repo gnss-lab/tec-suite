@@ -215,18 +215,18 @@ def select_navigation_message(epoch, system, number, message, first_msg=False):
 
     if system not in message:
         msg = 'There is no such system {sys} in the navigation message.'
-        logger.warning(msg.format(sys=system))
+        logger.info(msg.format(sys=system))
         return None
 
     if not message[system]:
         msg = 'There is no such navigation message.'
-        logger.warning(msg)
+        logger.info(msg)
         return None
 
     if number not in message[system]:
         msg = 'There is no such satellite {sys}{sat} in the navigation ' \
               'message.'
-        logger.warning(msg.format(sys=system, sat=number))
+        logger.info(msg.format(sys=system, sat=number))
         return None
 
     gps_way = (SAT_SYS_GPS, SAT_SYS_BDS, SAT_SYS_GAL)
