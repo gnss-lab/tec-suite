@@ -107,6 +107,15 @@ class UncompressError(Exception):
         return self.err_msg
 
 
+def write_ascii_lines(src, dst):
+    for line in src:
+        line = line.decode(
+            encoding='ascii',
+            errors='ignore',
+        )
+        dst.write(line)
+
+
 def expand_nav(filename):
     """expand_nav(filename) -> f_obj
 
@@ -127,18 +136,17 @@ def expand_nav(filename):
         return open(filename)
 
     try:
-        gzip_pipe = subprocess.Popen(gzip,
-                                     stdout=subprocess.PIPE,
-                                     universal_newlines=True)
+        gzip_pipe = subprocess.Popen(
+            gzip,
+            stdout=subprocess.PIPE,
+        )
 
         tmp_file = tempfile.TemporaryFile(mode='w+')
-
-        for line in gzip_pipe.stdout:
-            tmp_file.write(line)
+        write_ascii_lines(gzip_pipe.stdout, tmp_file)
 
         gzip_pipe.stdout.close()
-        tmp_file.seek(0)
 
+        tmp_file.seek(0)
         return tmp_file
 
     except (OSError, ValueError) as err:
@@ -175,19 +183,17 @@ def expand_obs(filename):
     if RE_Z.match(filename):
         # gzip
         try:
-            gzip_pipe = subprocess.Popen(gzip,
-                                         stdout=subprocess.PIPE,
-                                         universal_newlines=True)
+            gzip_pipe = subprocess.Popen(
+                gzip,
+                stdout=subprocess.PIPE,
+            )
         except OSError as err:
             msg = "can't execute gzip: %s" % str(err)
             raise UncompressError(filename, msg)
 
         # \d{2}o.Z
         if RE_RNX.match(filename):
-            for line in gzip_pipe.stdout:
-                tmp_file.write(line)
-
-            gzip_pipe.stdout.close()
+            write_ascii_lines(gzip_pipe.stdout, tmp_file)
 
         # \d{2}d.Z
         elif RE_CRX.match(filename):
@@ -195,20 +201,17 @@ def expand_obs(filename):
                 crx2rnx_pipe = subprocess.Popen(
                     crx2rnx[0],
                     stdin=gzip_pipe.stdout,
-                    universal_newlines=True,
-                    stdout=subprocess.PIPE)
+                    stdout=subprocess.PIPE,
+                )
 
             except (OSError, ValueError) as err:
                 msg = "can't execute crx2rnx: %s" % str(err)
                 raise UncompressError(filename, msg)
 
-            gzip_pipe.stdout.close()
-
-            for line in crx2rnx_pipe.stdout:
-                tmp_file.write(line)
-
-            gzip_pipe.stdout.close()
+            write_ascii_lines(crx2rnx_pipe.stdout, tmp_file)
             crx2rnx_pipe.stdout.close()
+
+        gzip_pipe.stdout.close()
 
         tmp_file.seek(0)
         return tmp_file
@@ -217,15 +220,16 @@ def expand_obs(filename):
     elif RE_CRX.match(filename):
 
         try:
-            crx2rnx_pipe = subprocess.Popen(crx2rnx,
-                                            stdout=subprocess.PIPE,
-                                            universal_newlines=True)
+            crx2rnx_pipe = subprocess.Popen(
+                crx2rnx,
+                stdout=subprocess.PIPE,
+            )
         except (OSError, ValueError) as err:
             msg = "can't execute crx2rnx: %s" % str(err)
             raise UncompressError(filename, msg)
 
-        for line in crx2rnx_pipe.stdout:
-            tmp_file.write(line)
+        write_ascii_lines(crx2rnx_pipe.stdout, tmp_file)
+
         crx2rnx_pipe.stdout.close()
 
         tmp_file.seek(0)
@@ -233,7 +237,12 @@ def expand_obs(filename):
 
     # \d{2}o
     elif RE_RNX.match(filename):
-        o_file = io.open(filename, 'r')
+        o_file = io.open(
+            filename,
+            'r',
+            encoding='ascii',
+            errors='ignore',
+        )
         return o_file
 
     else:
