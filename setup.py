@@ -18,7 +18,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='tec-suite',
-    version='0.7.5',
+    version='0.7.6',
 
     description='Reconstruct TEC value in the ionosphere using GNSS-data',
     long_description=long_description,

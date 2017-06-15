@@ -58,7 +58,7 @@ from tecs.validity import eval_validity
 START_TIME = time.time()
 
 NAME = 'tecs'
-VERSION = '0.7.5'
+VERSION = '0.7.6'
 
 # Command line arguments
 ARG_PARSER = argparse.ArgumentParser()
