@@ -26,31 +26,23 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from builtins import next
-from builtins import str
-
 import argparse
 import logging
 import os.path
 import sys
 import time
+from builtins import next
+from builtins import str
 
-from tecs.rinex import obs_file
-from tecs.rinex.nmutils import (
-    load_navigation_message,
-    select_navigation_message, NMError
-)
-
+from tecs import version
 from tecs.gtb.tools import parse_rec
-
+from tecs.label import OUT_FILE_TEXT
+from tecs.rinex import obs_file
 from tecs.rinex.basic import RinexError
 from tecs.rinex.futils import (
     UncompressError, RE_OBS, RE_XYZ, find_files,
     find_xyz_file, load_xyz_file
 )
-
-from tecs.label import OUT_FILE_TEXT
-
 from tecs.rinex.label import (
     L1, L2, L5, P1, P2, C1, C5, C2, S1, S2, S5,
     SAT_SYS_GLO, SAT_SYS_GEO, SAT_SYS_GPS,
@@ -58,7 +50,10 @@ from tecs.rinex.label import (
     TIME_SYS_GPS, SAT_SYS_BDS, L6, L7, SAT_SYS_GAL,
     C6, C7, LabelError
 )
-
+from tecs.rinex.nmutils import (
+    load_navigation_message,
+    select_navigation_message, NMError
+)
 from tecs.sat import gps, geo, glonass
 from tecs.sat.common import compute_el_az, xyz2lbh_deg
 from tecs.validity import eval_validity
@@ -66,7 +61,7 @@ from tecs.validity import eval_validity
 START_TIME = time.time()
 
 NAME = 'tecs'
-VERSION = '0.7.6'
+VERSION = version
 
 # Command line arguments
 ARG_PARSER = argparse.ArgumentParser()

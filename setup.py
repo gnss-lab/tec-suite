@@ -9,6 +9,8 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
+from tecs import version
+
 here = path.abspath(path.dirname(__file__))
 
 print(here)
@@ -18,7 +20,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='tec-suite',
-    version='0.7.6',
+    version=version,
 
     description='Reconstruct TEC value in the ionosphere using GNSS-data',
     long_description=long_description,

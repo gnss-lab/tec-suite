@@ -167,6 +167,8 @@ be written into an output file.
    +------------+--------------------------------------------------------------------+
    | tec.l1c1   | TEC value reconstructed using phase L1 and pseudorange C1 values   |
    +------------+--------------------------------------------------------------------+ 
+   | tec.l2c2   | TEC value reconstructed using phase L2 and pseudorange C2 values   |
+   +------------+--------------------------------------------------------------------+ 
 
 The following is the list of other fields which can be inserted
 into ``recFields`` variable.
@@ -176,7 +178,7 @@ into ``recFields`` variable.
 .. table:: The output fields list
    
    +----------+-----------------------------------------------------------------------+
-   | Notation |Meaning                                                                |
+   | Notation | Meaning                                                               |
    +==========+=======================================================================+
    |                                 *Date and time*                                  |
    +----------+-----------------------------------------------------------------------+
