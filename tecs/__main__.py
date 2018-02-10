@@ -36,20 +36,28 @@ import sys
 import time
 
 from tecs.rinex import obs_file
-from tecs.rinex.nmutils import load_navigation_message, \
+from tecs.rinex.nmutils import (
+    load_navigation_message,
     select_navigation_message, NMError
+)
 
 from tecs.gtb.tools import parse_rec
 
 from tecs.rinex.basic import RinexError
-from tecs.rinex.futils import UncompressError, RE_OBS, RE_XYZ, find_files, \
+from tecs.rinex.futils import (
+    UncompressError, RE_OBS, RE_XYZ, find_files,
     find_xyz_file, load_xyz_file
+)
 
 from tecs.label import OUT_FILE_TEXT
 
-from tecs.rinex.label import L1, L2, L5, P1, P2, C1, C5, C2, S1, S2, S5, \
-    SAT_SYS_GLO, SAT_SYS_GEO, SAT_SYS_GPS, SAT_SYS_MIX, \
-    TIME_SYS_GPS, SAT_SYS_BDS, L6, L7, SAT_SYS_GAL, C6, C7, LabelError
+from tecs.rinex.label import (
+    L1, L2, L5, P1, P2, C1, C5, C2, S1, S2, S5,
+    SAT_SYS_GLO, SAT_SYS_GEO, SAT_SYS_GPS,
+    SAT_SYS_MIX,
+    TIME_SYS_GPS, SAT_SYS_BDS, L6, L7, SAT_SYS_GAL,
+    C6, C7, LabelError
+)
 
 from tecs.sat import gps, geo, glonass
 from tecs.sat.common import compute_el_az, xyz2lbh_deg
@@ -549,6 +557,11 @@ def main():
                 ds[L1][0], ds[C1][0],
                 f1)
 
+            # - via L2&C2
+            tec_l2c2 = tec.compute_via_l1_c1(
+                ds[L2][0], ds[C2][0],
+                f2)
+
             # - via C1&C5
             tec_c1c5 = tec.compute_via_p(
                 ds[C1][0], ds[C5][0],
@@ -663,7 +676,8 @@ def main():
 
                 tec_c2c6,
                 tec_c2c7,
-                tec_c6c7
+                tec_c6c7,
+                tec_l2c2,
             )
 
             dc_len = len(data_chunk)

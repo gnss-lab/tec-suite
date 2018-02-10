@@ -294,5 +294,10 @@ class Rec(object):
                 'format': '{51: 10.3f}',
                 'type': lambda v: float(v),
                 'fortran': 'F10.3'
-            }
+            },
+            label.R_TEC_L2C2: {
+                'format': '{52: 21.3f}',
+                'type': lambda v: float(v),
+                'fortran': 'F21.3'
+            },
         }

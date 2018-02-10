@@ -94,7 +94,10 @@ def compute_on_demand_l(func):
 
 def compute_on_demand_l1_c1(func):
     """ """
-    if CFG.outFileModeText and lbl.R_TEC_L1C1 in TEC2CALC:
+    if CFG.outFileModeText and (
+            lbl.R_TEC_L1C1 in TEC2CALC or
+            lbl.R_TEC_L2C2 in TEC2CALC
+    ):
         return func
     else:
         return plug_func
