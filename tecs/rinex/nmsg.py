@@ -111,7 +111,6 @@ class QZSSSAIFNavigationMessage(GLONASSNavigationMessage):
 
 class IRNSSNavigationMessage(GPSNavigationMessage):
     system = SAT_SYS_IRNSS
-    vals_per_orbit = ()  # FIXME slightly different from GPS
 
     def __init__(self, number, epoch, sv_clock):
         super(IRNSSNavigationMessage, self).__init__(number, epoch, sv_clock)

@@ -147,7 +147,7 @@ class Nav2(NavigationMessage):
             line = orbits[orbit_num].rstrip()
 
             values = [
-                line[i:i + self.rec_len].lower().replace('d', 'e')
+                line[i:i + self.rec_len].rstrip().lower().replace('d', 'e')
 
                 for i in range(
                     self.orbit_start,
@@ -155,13 +155,11 @@ class Nav2(NavigationMessage):
                     self.rec_len)
                 ]
 
-            # FIXME Does 0 matter? Should I use 'None' for ''?
             try:
                 values = values[:vals_per_orbit[orbit_num]]
-                values = map(lambda s: s and float(s) or 0., values)
-                values = list(values)
+                values = [s and float(s) or 0. for s in values]
             except (ValueError, IndexError):
-                msg = "can't read the navigation message: {}".format(line)
+                msg = "can't read the message: {}".format(line)
                 raise RinexError(self.filename, msg)
 
             broadcast_orbits += values
