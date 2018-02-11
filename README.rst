@@ -1,6 +1,9 @@
 tec-suite v0.7.7
 ----------------
 
+.. image:: https://readthedocs.org/projects/tec-suite/badge/?version=latest
+  :target: http://tec-suite.readthedocs.io/en/latest/?badge=latest
+
 Software to reconstruct slant total electron content (TEC) value in
 the ionosphere using data derived from global navigation satellite
 systems such as GPS, GLONASS, etc.
@@ -17,6 +20,7 @@ For the moment **tec-suite** supports:
   * Galileo
   * Compass/BeiDou
   * GEO
+  * IRNSS
 
 * RINEX versions:
 

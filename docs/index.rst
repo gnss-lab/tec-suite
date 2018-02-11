@@ -21,6 +21,7 @@ For the moment **tec-suite** supports:
   * Galileo
   * Compass/BeiDou
   * GEO (geostationary satellites, part of `SBAS`_)
+  * IRNSS
 
 .. _SBAS: http://www.navipedia.net/index.php/SBAS
      
