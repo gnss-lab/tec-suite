@@ -54,9 +54,6 @@ class GPSNavigationMessage(GNSSNavigationMessage):
     system = SAT_SYS_GPS
     vals_per_orbit = (4, 4, 4, 4, 4, 4, 2)
 
-    def __init__(self, number, epoch, sv_clock):
-        super(GPSNavigationMessage, self).__init__(number, epoch, sv_clock)
-
     @property
     def message(self):
         return self._message
@@ -70,47 +67,26 @@ class GLONASSNavigationMessage(GNSSNavigationMessage):
     system = SAT_SYS_GLO
     vals_per_orbit = (4, 4, 4)
 
-    def __init__(self, number, epoch, sv_clock):
-        super(GLONASSNavigationMessage, self).__init__(number, epoch, sv_clock)
-
 
 class GalileoNavigationMessage(GPSNavigationMessage):
     system = SAT_SYS_GAL
-
-    def __init__(self, number, epoch, sv_clock):
-        super(GalileoNavigationMessage, self).__init__(number, epoch, sv_clock)
 
 
 class SBASNavigationMessage(GLONASSNavigationMessage):
     system = SAT_SYS_GEO
 
-    def __init__(self, number, epoch, sv_clock):
-        super(SBASNavigationMessage, self).__init__(number, epoch, sv_clock)
-
 
 class BDSNavigationMessage(GPSNavigationMessage):
     system = SAT_SYS_BDS
-
-    def __init__(self, number, epoch, sv_clock):
-        super(BDSNavigationMessage, self).__init__(number, epoch, sv_clock)
 
 
 class QZSSNavigationMessage(GPSNavigationMessage):
     system = SAT_SYS_QZSS
 
-    def __init__(self, number, epoch, sv_clock):
-        super(QZSSNavigationMessage, self).__init__(number, epoch, sv_clock)
-
 
 class QZSSSAIFNavigationMessage(GLONASSNavigationMessage):
     system = SAT_SYS_GEO  # FIXME is it right? move to SBAS?
 
-    def __init__(self, number, epoch, sv_clock):
-        super(QZSSSAIFNavigationMessage, self).__init__(number, epoch, sv_clock)
-
 
 class IRNSSNavigationMessage(GPSNavigationMessage):
     system = SAT_SYS_IRNSS
-
-    def __init__(self, number, epoch, sv_clock):
-        super(IRNSSNavigationMessage, self).__init__(number, epoch, sv_clock)
