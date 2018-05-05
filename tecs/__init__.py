@@ -18,4 +18,4 @@
 # You should have received a copy of the GNU General Public License
 # along with tec-suite.  If not, see <http://www.gnu.org/licenses/>.
 
-version = 'v0.7.7'
+version = 'v0.7.8'
