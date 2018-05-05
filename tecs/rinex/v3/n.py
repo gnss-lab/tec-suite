@@ -22,23 +22,18 @@
 File: p.py
 Description: mixed GNSS navigation message file
 """
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
 from builtins import map
 
-import logging
-
+from tecs.rinex.basic import RinexError
 from tecs.rinex.common import validate_epoch
-from tecs.rinex.header import RinexVersionType
-from tecs.rinex.basic import NavigationMessage, read_header, RinexError
-
 from tecs.rinex.nmsg import GPSNavigationMessage, GLONASSNavigationMessage, \
     GalileoNavigationMessage, SBASNavigationMessage, BDSNavigationMessage, \
     QZSSNavigationMessage, IRNSSNavigationMessage
-
 from tecs.rinex.v2.n import Nav2
 
 NAME = 'tecs.rinex.v3.n'
@@ -54,12 +49,17 @@ class Nav3(Nav2):
 
     spaces = 1
 
-    systems = (GPSNavigationMessage, GLONASSNavigationMessage,
-               GalileoNavigationMessage, SBASNavigationMessage)
+    systems = (
+        GPSNavigationMessage,
+        GLONASSNavigationMessage,
+        GalileoNavigationMessage,
+        SBASNavigationMessage,
+        BDSNavigationMessage,
+        QZSSNavigationMessage,
+        IRNSSNavigationMessage,
+    )
+    
     file_types = None
-
-    def __init__(self, f_obj, filename):
-        super(Nav3, self).__init__(f_obj, filename)
 
     def _parse_epoch_record(self, epoch_record):
         """_parse_epoch_record(self, epoch_record) -> epoch_components
@@ -100,23 +100,12 @@ class Nav301(Nav3):
     version = 3.01
     systems = Nav3.systems
 
-    def __init__(self, f_obj, filename):
-        super(Nav301, self).__init__(f_obj, filename)
-
 
 class Nav302(Nav301):
     _name = NAME + '.Nav302'
     version = 3.02
-    systems = Nav301.systems + (BDSNavigationMessage, QZSSNavigationMessage)
-
-    def __init__(self, f_obj, filename):
-        super(Nav302, self).__init__(f_obj, filename)
 
 
 class Nav303(Nav302):
     _name = NAME + '.Nav303'
     version = 3.03
-    systems = Nav302.systems + (IRNSSNavigationMessage,)
-
-    def __init__(self, f_obj, filename):
-        super(Nav303, self).__init__(f_obj, filename)
