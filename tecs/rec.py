@@ -300,4 +300,29 @@ class Rec(object):
                 'type': lambda v: float(v),
                 'fortran': 'F21.3'
             },
+            label.R_S1C: {
+                'format': '{53: 16.3f}',
+                'type': lambda v: float(v),
+                'fortran': 'F16.3'
+            },
+            label.R_S1W: {
+                'format': '{54: 16.3f}',
+                'type': lambda v: float(v),
+                'fortran': 'F16.3'
+            },
+            label.R_S2L: {
+                'format': '{55: 16.3f}',
+                'type': lambda v: float(v),
+                'fortran': 'F16.3'
+            },
+            label.R_S2W: {
+                'format': '{56: 16.3f}',
+                'type': lambda v: float(v),
+                'fortran': 'F16.3'
+            },
+            label.R_S2C: {
+                'format': '{57: 16.3f}',
+                'type': lambda v: float(v),
+                'fortran': 'F16.3'
+            },
         }

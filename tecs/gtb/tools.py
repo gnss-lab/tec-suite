@@ -25,9 +25,8 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-# import sys
-# from tecs.rinex import label
 from tecs.rinex.label import OBS_TYPE_LABELS
+from tecs.rinex.label import OBS_TYPE_LABELS_PLAIN
 
 NAME = 'tecs.gtb.tools'
 
@@ -51,6 +50,14 @@ def parse_rec(rec):
     datum = {}
     obs_types = list(rec.keys())
     obs_types.sort()
+
+    # XXX: костыль, чтобы можно было добавить конкретные типы наблюдений,
+    #  а не первый попавшийся
+    for plain_type in OBS_TYPE_LABELS_PLAIN:
+        if plain_type in obs_types:
+            datum[plain_type] = rec[plain_type]
+        else:
+            datum[plain_type] = (None,) * 3
 
     for ot_set in OBS_TYPE_LABELS:
         datum[ot_set] = (None,) * 3

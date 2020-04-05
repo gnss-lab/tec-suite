@@ -48,8 +48,8 @@ from tecs.rinex.label import (
     SAT_SYS_GLO, SAT_SYS_GEO, SAT_SYS_GPS,
     SAT_SYS_MIX,
     TIME_SYS_GPS, SAT_SYS_BDS, L6, L7, SAT_SYS_GAL,
-    C6, C7, LabelError
-)
+    C6, C7, LabelError,
+    S1C, S1W, S2L, S2W, S2C)
 from tecs.rinex.nmutils import (
     load_navigation_message,
     select_navigation_message, NMError
@@ -673,6 +673,12 @@ def main():
                 tec_c2c7,
                 tec_c6c7,
                 tec_l2c2,
+
+                ds[S1C][0],
+                ds[S1W][0],
+                ds[S2L][0],
+                ds[S2W][0],
+                ds[S2C][0],
             )
 
             dc_len = len(data_chunk)

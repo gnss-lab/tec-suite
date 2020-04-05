@@ -96,6 +96,13 @@ S6 = ('S6',) + codes('S6', 'IQXABCZ')
 S7 = ('S7',) + codes('S7', 'IQX')
 S8 = ('S8',) + codes('S8', 'IQX')
 
+# plain signal strength
+S1C = 'S1C'
+S1W = 'S1W'
+S2L = 'S2L'
+S2W = 'S2W'
+S2C = 'S2C'
+
 # loss-of-lock indicator for validity
 LLI1 = ('LLI1',)
 LLI2 = ('LLI2',)
@@ -107,6 +114,10 @@ OBS_TYPE_LABELS = (
     L1, L2, L3, L5, L6, L7, L8,
     S1, S2, S3, S5, S6, S7, S8,
     D1, D2, D3, D5, D6, D7, D8
+)
+
+OBS_TYPE_LABELS_PLAIN = (
+    S1C, S1W, S2L, S2W, S2C,
 )
 
 LABELS = OBS_TYPE_LABELS + (LLI1, LLI2, LLI5)
