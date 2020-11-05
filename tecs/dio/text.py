@@ -161,12 +161,10 @@ class Text(object):
 
         # all but the date
         vals = list(chunk[1:])
-
         if None in vals:
             nones = [i for (i, v) in enumerate(vals) if v is None]
             for i in nones:
                 vals[i] = 0
-
         # an output record
         rec = None
         try:

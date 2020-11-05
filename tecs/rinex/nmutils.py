@@ -156,7 +156,7 @@ def load_navigation_message(paths, epoch, system, priority=None):
 
     # navigation files corresponded to the date and the system
     nav_files = find_nav_files(paths, epoch, system)
-
+    print(nav_files)
     if not nav_files:
         nav_files = find_nav_files(paths, epoch, SAT_SYS_MIX)
         if not nav_files:

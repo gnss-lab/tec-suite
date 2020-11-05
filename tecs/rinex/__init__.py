@@ -110,7 +110,8 @@ def nav_file(filename):
         3.00: Nav3,
         3.01: Nav301,
         3.02: Nav302,
-        3.03: Nav303
+        3.03: Nav303,
+        3.04: Nav303
     }
 
     if version in nav_cls:

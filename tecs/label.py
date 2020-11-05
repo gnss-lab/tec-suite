@@ -62,6 +62,9 @@ R_TEC_ALL.append(R_TEC_L1C1)
 R_TEC_L2C2 = 'tec.l2c2'
 R_TEC_ALL.append(R_TEC_L2C2)
 
+R_TEC_L8C8 = 'tec.l8c8'
+R_TEC_ALL.append(R_TEC_L8C8)
+
 R_TEC_L2L6 = 'tec.l2l6'
 R_TEC_ALL.append(R_TEC_L2L6)
 
