@@ -300,4 +300,9 @@ class Rec(object):
                 'type': lambda v: float(v),
                 'fortran': 'F21.3'
             },
+            label.R_TEC_L8C8: {
+                'format': '{53: 21.3f}',
+                'type': lambda v: float(v),
+                'fortran': 'F21.3'
+            },
         }
