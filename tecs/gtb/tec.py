@@ -96,7 +96,8 @@ def compute_on_demand_l1_c1(func):
     """ """
     if CFG.outFileModeText and (
             lbl.R_TEC_L1C1 in TEC2CALC or
-            lbl.R_TEC_L2C2 in TEC2CALC
+            lbl.R_TEC_L2C2 in TEC2CALC or
+            lbl.R_TEC_L8C8 in TEC2CALC
     ):
         return func
     else:
@@ -189,7 +190,6 @@ def compute_via_l1_c1(l1, c1, f1):
 
     if not f1:
         return None
-
     tec = None
 
     if c1 and l1 and f1:
