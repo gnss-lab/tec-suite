@@ -49,7 +49,7 @@ setup(
     py_modules=["tecs"],
     packages=find_packages(),
 
-    install_requires=['future'],
+    install_requires=['future', 'hatanaka'],
 
     extras_require={
         'test': ['coverage', 'nose'],

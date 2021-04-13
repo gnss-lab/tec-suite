@@ -24,7 +24,7 @@ rinex
 from __future__ import unicode_literals
 
 from tecs.rinex.basic import RinexError
-from tecs.rinex.futils import RE_VER, GZIP, CRX2RNX, expand_obs, expand_nav
+from tecs.rinex.futils import RE_VER, expand_obs, expand_nav
 from tecs.rinex.header import RinexVersionType
 
 from tecs.rinex.v2.o import Obs2, Obs21, Obs211

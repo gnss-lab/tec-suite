@@ -28,7 +28,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import io
-from builtins import map
 from builtins import str
 
 import datetime
@@ -37,10 +36,10 @@ import os
 
 import os.path
 import re
-import subprocess
 import sys
-import tempfile
 from string import Template
+
+import hatanaka
 
 NAME = 'tecs.rinex.futils'
 
@@ -53,20 +52,13 @@ RE_CLASSIC_RINEX = re.compile(r'^(\w{4})(\d{3})\w{1,3}\.(\d{2})([odnmglphbc])',
 ARCH = r'\.z|\.gz'
 CRD_EXT = '.xyz'
 
-RE_Z = re.compile(r'(.*)\.(z|gz)$', re.I)
+RE_Z = re.compile(r'(.*)\.(z|gz|bz2|zip)$', re.I)
 RE_CRX = re.compile(r'(.*)\.(\d{2}d|crx)', re.I)
 RE_RNX = re.compile(r'(.*)\.(\d{2}o|rnx)', re.I)
 
 # FIXME do I need this?
 # RE_CLASSIC_NAV = re.compile(r'^(\w{4})(\d{3})\w\.(\d{2})([nglph])', re.I)
 # Z_EXT = r'({})$'.format(ARCH)
-
-GZIP = ['gzip', '-cd']
-CRX2RNX = ['crx2rnx', '-']
-
-if os.name == 'nt':
-    GZIP[0] = r'apps/gzip.exe'
-    CRX2RNX[0] = r'apps/crx2rnx.exe'
 
 
 def _compose_res():
@@ -88,8 +80,7 @@ def _compose_res():
     re_obs_wo_ext_str = obs_tmpl.substitute(ext='')
     re_obs_wo_ext_str = '({})'.format(re_obs_wo_ext_str)
 
-    return list(map(re.compile, (re_obs_str, re_xyz_str, re_obs_wo_ext_str),
-                    (re.I,) * 3))
+    return [re.compile(x, re.I) for x in (re_obs_str, re_xyz_str, re_obs_wo_ext_str)]
 
 
 RE_OBS, RE_XYZ, RE_OBS_WO_EXT = _compose_res()
@@ -129,29 +120,8 @@ def expand_nav(filename):
     -------
     f_obj : file
     """
-
-    gzip = GZIP + [filename]
-
-    if not RE_Z.match(filename):
-        return open(filename)
-
-    try:
-        gzip_pipe = subprocess.Popen(
-            gzip,
-            stdout=subprocess.PIPE,
-        )
-
-        tmp_file = tempfile.TemporaryFile(mode='w+')
-        write_ascii_lines(gzip_pipe.stdout, tmp_file)
-
-        gzip_pipe.stdout.close()
-
-        tmp_file.seek(0)
-        return tmp_file
-
-    except (OSError, ValueError) as err:
-        msg = "can't uncompress the file (%s)." % err
-        raise UncompressError(filename, msg)
+    data = hatanaka.decompress(filename)
+    return io.StringIO(data.decode('ascii'))
 
 
 def expand_obs(filename):
@@ -168,86 +138,13 @@ def expand_obs(filename):
     f_obj : file
     """
 
-    gzip = GZIP + [filename]
-    crx2rnx = CRX2RNX + [filename]
-
     f_bn = os.path.basename(filename)
-    if not RE_OBS.match(f_bn):
+    if not RE_OBS.match(f_bn) and not RE_OBS_WO_EXT.match(f_bn):
         msg = "Not an observation rinex file."
         raise UncompressError(filename, msg)
-    del f_bn
 
-    tmp_file = tempfile.TemporaryFile(mode='w+')
-
-    # rinex + .Z
-    if RE_Z.match(filename):
-        # gzip
-        try:
-            gzip_pipe = subprocess.Popen(
-                gzip,
-                stdout=subprocess.PIPE,
-            )
-        except OSError as err:
-            msg = "can't execute gzip: %s" % str(err)
-            raise UncompressError(filename, msg)
-
-        # \d{2}o.Z
-        if RE_RNX.match(filename):
-            write_ascii_lines(gzip_pipe.stdout, tmp_file)
-
-        # \d{2}d.Z
-        elif RE_CRX.match(filename):
-            try:
-                crx2rnx_pipe = subprocess.Popen(
-                    crx2rnx[0],
-                    stdin=gzip_pipe.stdout,
-                    stdout=subprocess.PIPE,
-                )
-
-            except (OSError, ValueError) as err:
-                msg = "can't execute crx2rnx: %s" % str(err)
-                raise UncompressError(filename, msg)
-
-            write_ascii_lines(crx2rnx_pipe.stdout, tmp_file)
-            crx2rnx_pipe.stdout.close()
-
-        gzip_pipe.stdout.close()
-
-        tmp_file.seek(0)
-        return tmp_file
-
-    # \d{2}d
-    elif RE_CRX.match(filename):
-
-        try:
-            crx2rnx_pipe = subprocess.Popen(
-                crx2rnx,
-                stdout=subprocess.PIPE,
-            )
-        except (OSError, ValueError) as err:
-            msg = "can't execute crx2rnx: %s" % str(err)
-            raise UncompressError(filename, msg)
-
-        write_ascii_lines(crx2rnx_pipe.stdout, tmp_file)
-
-        crx2rnx_pipe.stdout.close()
-
-        tmp_file.seek(0)
-        return tmp_file
-
-    # \d{2}o
-    elif RE_RNX.match(filename):
-        o_file = io.open(
-            filename,
-            'r',
-            encoding='ascii',
-            errors='ignore',
-        )
-        return o_file
-
-    else:
-        msg = "Not an observation rinex file."
-        raise UncompressError(filename, msg)
+    data = hatanaka.decompress(filename)
+    return io.StringIO(data.decode('ascii'))
 
 
 def get_rinex_date(filename):
