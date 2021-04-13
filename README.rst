@@ -56,20 +56,6 @@ Downloads
 .. _x86_32: https://github.com/gnss-lab/tec-suite/releases/download/v0.7.8/tec-suite-v0.7.8-linux32.tgz
 .. _x86_64: https://github.com/gnss-lab/tec-suite/releases/download/v0.7.8/tec-suite-v0.7.8-linux64.tgz
 
-Requirements
-~~~~~~~~~~~~
-
-``crx2rnx``
-    To decompress Hatanaka-compressed RINEX files, **tec-suite** uses
-    `crx2rnx <http://terras.gsi.go.jp/ja/crx2rnx.html>`_.
-
-``gunzip``
-    To unarchive ``.z``, ``.Z`` or ``.gz``, files **tec-suite**
-    uses ``gunzip``. If your system is **Linux** or **macOS** you
-    probably have it installed. You can find the **Windows** version
-    at `GnuWin <http://gnuwin32.sourceforge.net/packages/gzip.htm>`_
-    site.
-
 Usage
 =====
 
